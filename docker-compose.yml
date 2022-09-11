@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD_FILE: "/run/secrets/postgres_password"
+    volumes:
+      - "./config:/run/secrets"
+      - "pgdata:/var/lib/postgresql/data"
+    networks:
+      - db-network
+
+networks:
+  db-network:
+    name: db-network
+    driver: bridge
+
+volumes:
+  pgdata:
